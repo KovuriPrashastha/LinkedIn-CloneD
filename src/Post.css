@@ -33,7 +33,10 @@
 }
 
 .post__image > img {
-    width: 100%;
+    padding: 200px;
+    align-items: center;
+    width: 500px;
+    height: 500px;
 }
 .post__options{
     padding-top: 10px;
