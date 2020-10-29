@@ -5,13 +5,13 @@ import {
   Add,
   Search,
   Home,
-  Subscriptions,
-  Storefront,
-  SupervisedUserCircle,
-  Flag,
   Forum,
   NotificationsActive,
   ExpandMore,
+  People,
+  LocalMall,
+  QuestionAnswer,
+  Notifications,
 } from '@material-ui/icons';
 import { Avatar, IconButton } from '@material-ui/core';
 import { useStateValue } from './StateProvider.js';
@@ -32,16 +32,16 @@ function Header() {
           <Home fontSize='large' onClick={() => console.log('Helooooo')} />
         </div>
         <div className='header__option header__option--active'>
-          <Subscriptions fontSize='large' />
+          <People fontSize='large' />
         </div>
         <div className='header__option header__option--active'>
-          <Flag fontSize='large' />
+          <LocalMall fontSize='large' />
         </div>
         <div className='header__option header__option--active'>
-          <Storefront fontSize='large' />
+          <QuestionAnswer fontSize='large' />
         </div>
         <div className='header__option header__option--active'>
-          <SupervisedUserCircle fontSize='large' />
+          <Notifications fontSize='large' />
         </div>
       </div>
       <div className='header__right'>

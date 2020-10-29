@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
 import { Avatar } from '@material-ui/core';
-import { Videocam, PhotoLibrary, InsertEmoticon } from '@material-ui/icons';
+import {
+  Videocam,
+  Event,
+  PhotoCamera,
+  Assignment,
+  PostAdd,
+} from '@material-ui/icons';
 import { useStateValue } from './StateProvider.js';
 import db from './firebase.js';
-import firebase from './firebase.js';
 
 function CreatePost() {
   const [{ user }, dispatch] = useStateValue();
@@ -28,11 +33,13 @@ function CreatePost() {
       <div className='createPost__top'>
         <Avatar src={user.photoURL} />
         <form>
+          <PostAdd />
           <input
+            InputProps={<PostAdd />}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className='createPost__input'
-            placeholder={`Whats on your mind,${user.displayName}`}
+            placeholder={`Start a post ,${user.displayName}`}
           />
           <input
             value={imageUrl}
@@ -46,16 +53,20 @@ function CreatePost() {
       </div>
       <div className='createPost__bottom'>
         <div className='createPost__option'>
-          <Videocam style={{ color: 'red' }} />
-          <h3>Live Video</h3>
+          <PhotoCamera style={{ color: '#33aada' }} />
+          <h3>Photo</h3>
         </div>
         <div className='createPost__option'>
-          <PhotoLibrary style={{ color: 'green' }} />
-          <h3>Photo/Video</h3>
+          <Videocam style={{ color: '#9896f2' }} />
+          <h3>Video</h3>
         </div>
         <div className='createPost__option'>
-          <InsertEmoticon style={{ color: 'orange' }} />
-          <h3>Feeling/Activity</h3>
+          <Event style={{ color: '#c19191' }} />
+          <h3>Event</h3>
+        </div>
+        <div className='createPost__option'>
+          <Assignment style={{ color: '#ef7e37' }} />
+          <h3>Write article</h3>
         </div>
       </div>
     </div>
