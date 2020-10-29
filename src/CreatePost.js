@@ -20,7 +20,7 @@ function CreatePost() {
     e.preventDefault();
     db.collection('posts').add({
       message: input,
-      timestamp: new Date(), //firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: new Date(),
       profilePic: user.photoURL,
       image: imageUrl,
       username: user.displayName,
