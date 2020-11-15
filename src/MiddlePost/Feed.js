@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StoryReel from './StoryReel.js';
 import CreatePost from './CreatePost.js';
 import Post from './Post.js';
-import db from './firebase.js';
+import db from '../firebase.js';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
@@ -20,11 +20,14 @@ function Feed() {
       {posts.map((post) => (
         <Post
           key={post.id}
+          postId={post.id}
           profilePic={post.data.profilePic}
           timestamp={post.data.timestamp}
           username={post.data.username}
           image={post.data.image}
           message={post.data.message}
+          likes={post.data.likes}
+          likedUsers={post.data.likedUsers}
         />
       ))}
       {/* <Post

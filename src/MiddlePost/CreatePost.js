@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
+import { useStateValue } from '../StateProvider.js';
+import db from '../firebase.js';
 import { Avatar } from '@material-ui/core';
 import {
   Videocam,
@@ -8,8 +10,6 @@ import {
   Assignment,
   PostAdd,
 } from '@material-ui/icons';
-import { useStateValue } from './StateProvider.js';
-import db from './firebase.js';
 
 function CreatePost() {
   const [{ user }, dispatch] = useStateValue();

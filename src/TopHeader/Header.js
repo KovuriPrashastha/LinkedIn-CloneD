@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.css';
-import logo from './images/logo.png';
+import { useStateValue } from '../StateProvider.js';
+import logo from '../images/logo.png';
 import {
   Add,
   Search,
@@ -14,7 +15,6 @@ import {
   Notifications,
 } from '@material-ui/icons';
 import { Avatar, IconButton } from '@material-ui/core';
-import { useStateValue } from './StateProvider.js';
 
 function Header() {
   const [{ user }, dispatch] = useStateValue();

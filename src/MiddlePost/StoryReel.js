@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './StoryReel.css';
 import Story from './Story.js';
-// import Img from './images/myImg.png';
-// import Img2 from './images/default.jpg';
 import { Add } from '@material-ui/icons';
 import './Story.css';
 import { IconButton } from '@material-ui/core';
-import db from './firebase.js';
-import { useStateValue } from './StateProvider.js';
+import db from '../firebase.js';
+import { useStateValue } from '../StateProvider.js';
 
 export default function StoryReel(props) {
   const [stories, setStories] = useState([]);

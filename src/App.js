@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import Header from './Header.js';
+import Header from './TopHeader/Header.js';
 import './App.css';
-import Sidebar from './Sidebar.js';
-import Feed from './Feed.js';
-import Widgets from './Widgets.js';
-import Login from './Login.js';
+import Sidebar from './LeftSidebar/Sidebar.js';
+import Feed from './MiddlePost/Feed.js';
+import Widgets from './RightFrame/Widgets.js';
+import Login from './AppLogin/Login.js';
 import { useStateValue } from './StateProvider.js';
 import { auth } from './firebase.js';
 import { actionTypes } from './reducer.js';
