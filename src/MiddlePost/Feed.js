@@ -6,13 +6,30 @@ import db from '../firebase.js';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
+  const [studentPosts, setStudentPosts] = useState([]);
+  const [teacherPosts, setTeacherPosts] = useState([]);
+
+  // const [posts, setPosts] = useState([]);
+  // useEffect(() => {
+  //   db.collection('studentPosts')
+  //     .orderBy('timestamp', 'desc')
+  //     .onSnapshot((snapshot) =>
+  //       setStudentPosts(
+  //         snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+  //       )
+  //     );
+  // }, []);
   useEffect(() => {
+    console.log('no problem');
     db.collection('posts')
       .orderBy('timestamp', 'desc')
       .onSnapshot((snapshot) =>
         setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
       );
   }, []);
+  // posts = [].concat(posts, studentPosts);
+  // console.log(posts);
+
   return (
     <div className='feed'>
       <StoryReel />

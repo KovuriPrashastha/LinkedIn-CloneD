@@ -6,6 +6,8 @@ import { KeyboardArrowUp } from '@material-ui/icons';
 
 function Comments({ setCommentsOpen, postId }) {
   const [comments, setComments] = useState([]);
+  // const [studentComments, setStudentComments] = useState([]);
+  // const [teacherComments, setTeacherComments] = useState([]);
 
   useEffect(() => {
     let unsubscribe;
@@ -24,6 +26,23 @@ function Comments({ setCommentsOpen, postId }) {
     };
   }, []);
 
+  // useEffect(() => {
+  //   let unsubscribe;
+  //   if (postId) {
+  //     unsubscribe = db
+  //       .collection('posts')
+  //       .doc(postId)
+  //       .collection('comments')
+  //       .orderBy('timestamp', 'desc')
+  //       .onSnapshot((Snapshot) => {
+  //         setTeacherComments(Snapshot.docs.map((doc) => doc.data()));
+  //       });
+  //   }
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
+  //comments = [].concat(studentComments, teacherComments);
   return (
     <div className='comment-outer-div'>
       <div className='comment-inner-div'>

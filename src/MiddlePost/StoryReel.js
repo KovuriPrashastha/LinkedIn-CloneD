@@ -16,8 +16,6 @@ export default function StoryReel(props) {
   }, []);
 
   const [{ user }, dispatch] = useStateValue();
-  //   const [input, setInput] = useState('');
-  //   const [imageUrl, setImageUrl] = useState('');
 
   const addStory = (e) => {
     e.preventDefault();
@@ -28,18 +26,20 @@ export default function StoryReel(props) {
     });
   };
   return (
-    <div className='storyReel'>
+    <div className='storyreel_scroll'>
       <IconButton onClick={addStory}>
         <Add className='story' />
       </IconButton>
-      {stories.map((story) => (
-        <Story
-          key={story.id}
-          profileSrc={story.data.profileSrc}
-          image={story.data.image}
-          title={story.data.title}
-        />
-      ))}
+      <div className='storyReel'>
+        {stories.map((story) => (
+          <Story
+            key={story.id}
+            profileSrc={story.data.profileSrc}
+            image={story.data.image}
+            title={story.data.title}
+          />
+        ))}
+      </div>
     </div>
   );
 }

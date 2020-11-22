@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Post.css';
 import db from '../firebase.js';
 import Comments from './Comment.js';
-import { Avatar, Typography, TextField, Button } from '@material-ui/core';
+import {
+  Avatar,
+  Typography,
+  TextField,
+  Button,
+  Divider,
+} from '@material-ui/core';
 import {
   ThumbUp,
   NearMe,
@@ -27,6 +33,7 @@ function Post({
 
   const postComment = (event) => {
     event.preventDefault();
+
     db.collection('posts').doc(postId).collection('comments').add({
       text: comment,
       username: firebase.auth().currentUser.displayName,
@@ -81,6 +88,7 @@ function Post({
           <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
         </div>
       </div>
+      <Divider />
       <div className='post__bottom'>
         <p>{message}</p>
       </div>

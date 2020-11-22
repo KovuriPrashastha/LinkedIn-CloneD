@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import './CreatePost.css';
 import { useStateValue } from '../StateProvider.js';
 import db from '../firebase.js';
-import { Avatar } from '@material-ui/core';
+import {
+  Avatar,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+} from '@material-ui/core';
 import {
   Videocam,
   Event,
@@ -10,8 +16,35 @@ import {
   Assignment,
   PostAdd,
 } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles((theme) => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}));
 
 function CreatePost() {
+  const classes = useStyles();
+  const [postAs, setPostAs] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+
+  const handleChange = (event) => {
+    setPostAs(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const [{ user }, dispatch] = useStateValue();
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -24,6 +57,9 @@ function CreatePost() {
       profilePic: user.photoURL,
       image: imageUrl,
       username: user.displayName,
+      likes: 0,
+      likedUsers: [],
+      postedBy: postAs,
     });
     setInput('');
     setImageUrl('');
@@ -33,7 +69,6 @@ function CreatePost() {
       <div className='createPost__top'>
         <Avatar src={user.photoURL} />
         <form>
-          <PostAdd />
           <input
             InputProps={<PostAdd />}
             value={input}
@@ -46,9 +81,30 @@ function CreatePost() {
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder='url'
           />
+          <FormControl className={classes.formControl}>
+            <InputLabel id='demo-controlled-open-select-label'>
+              Post As
+            </InputLabel>
+            <Select
+              labelId='demo-controlled-open-select-label'
+              id='demo-controlled-open-select'
+              open={open}
+              onClose={handleClose}
+              onOpen={handleOpen}
+              value={postAs}
+              onChange={handleChange}
+            >
+              <MenuItem value=''>
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={'Alumni'}>Alumni</MenuItem>
+              <MenuItem value={'Teacher'}>Teacher</MenuItem>
+              <MenuItem value={'Student'}>Student</MenuItem>
+            </Select>
+          </FormControl>
         </form>
         <button onClick={handleSubmit} type='submit'>
-          Hidden Button
+          Post
         </button>
       </div>
       <div className='createPost__bottom'>
