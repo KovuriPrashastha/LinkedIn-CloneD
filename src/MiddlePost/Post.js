@@ -16,6 +16,7 @@ import {
   KeyboardArrowDown,
 } from '@material-ui/icons';
 import firebase from 'firebase';
+import { useStateValue } from '../StateProvider.js';
 
 function Post({
   profilePic,
@@ -30,6 +31,7 @@ function Post({
   const [count, setCount] = useState(false);
   const [comment, setComment] = useState('');
   const [commentsOpen, setCommentsOpen] = useState(false);
+  const [{ user }, dispatch] = useStateValue();
 
   const postComment = (event) => {
     event.preventDefault();
@@ -52,6 +54,49 @@ function Post({
       }
     });
   }, []);
+
+  const sharePost = (e) => {
+    // console.log(db.collection('posts').doc(postId));
+    // console.log('Helloooo');
+    var docRef = db.collection('posts').doc(postId);
+
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          db.collection('posts').add({
+            message: doc.data().message,
+            timestamp: new Date(),
+            profilePic: user.photoURL,
+            image: doc.data().image,
+            username: user.displayName,
+            likes: 0,
+            likedUsers: [],
+            //postedBy: doc.data().postedBy,
+          });
+          console.log('Document data:', doc.data().message);
+          console.log(doc.data().message);
+          console.log(doc.data().image);
+          console.log(doc.data().postedBy);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch(function (error) {
+        console.log('Error getting document:', error);
+      });
+    // db.collection('posts').add({
+    //   message: input,
+    //   timestamp: new Date(),
+    //   profilePic: user.photoURL,
+    //   image: imageUrl,
+    //   username: user.displayName,
+    //   likes: 0,
+    //   likedUsers: [],
+    //   postedBy: postAs,
+    // });
+  };
 
   const postLike = (e) => {
     console.log(likes);
@@ -153,7 +198,7 @@ function Post({
           <p>Comment</p> */}
         </div>
         <div className='post__option'>
-          <NearMe />
+          <NearMe onClick={sharePost} />
           <p>Share</p>
         </div>
       </div>
