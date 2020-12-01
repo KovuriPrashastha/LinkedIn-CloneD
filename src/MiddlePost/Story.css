@@ -12,6 +12,15 @@
   transition: transform 100ms ease-in;
   cursor: pointer;
 }
+.icons {
+  position: absolute;
+  top: 30px;
+  right: 16px;
+  font-size: 18px;
+}
+.icons:hover {
+  background-color: #f5f5f5;
+}
 .story:hover {
   transform: scale(1.07);
 }

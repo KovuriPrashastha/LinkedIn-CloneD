@@ -6,8 +6,8 @@ import db from '../firebase.js';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
-  const [studentPosts, setStudentPosts] = useState([]);
-  const [teacherPosts, setTeacherPosts] = useState([]);
+  // const [studentPosts, setStudentPosts] = useState([]);
+  // const [teacherPosts, setTeacherPosts] = useState([]);
 
   // const [posts, setPosts] = useState([]);
   // useEffect(() => {

@@ -35,6 +35,7 @@ export default function StoryReel(props) {
           <Story
             key={story.id}
             profileSrc={story.data.profileSrc}
+            storyId={story.id}
             image={story.data.image}
             title={story.data.title}
           />

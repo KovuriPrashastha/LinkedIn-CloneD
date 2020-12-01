@@ -10,6 +10,7 @@ import {
   MenuItem,
   Button,
   Snackbar,
+  TextField,
 } from '@material-ui/core';
 import {
   Videocam,
@@ -113,7 +114,11 @@ function CreatePost() {
             className='createPost__input'
             placeholder={`Start a post ,${user.displayName}`}
           />
-          <input type='file' onChange={handleChange} />
+          <TextField
+            style={{ 'padding-top': '24px' }}
+            type='file'
+            onChange={handleChange}
+          />
 
           <FormControl className={classes.formControl}>
             <InputLabel id='demo-controlled-open-select-label'>
