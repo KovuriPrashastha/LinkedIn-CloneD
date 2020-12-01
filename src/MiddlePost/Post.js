@@ -8,6 +8,7 @@ import {
   TextField,
   Button,
   Divider,
+  Snackbar,
 } from '@material-ui/core';
 import {
   ThumbUp,
@@ -15,6 +16,8 @@ import {
   Comment,
   KeyboardArrowDown,
 } from '@material-ui/icons';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
 import firebase from 'firebase';
 import { useStateValue } from '../StateProvider.js';
 
@@ -32,6 +35,19 @@ function Post({
   const [comment, setComment] = useState('');
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [{ user }, dispatch] = useStateValue();
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
+  }
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
 
   const postComment = (event) => {
     event.preventDefault();
@@ -96,6 +112,7 @@ function Post({
     //   likedUsers: [],
     //   postedBy: postAs,
     // });
+    setOpen(true);
   };
 
   const postLike = (e) => {
@@ -123,6 +140,20 @@ function Post({
           firebase.auth().currentUser.uid
         ),
       });
+  };
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
   return (
     <div className='post'>
@@ -193,13 +224,15 @@ function Post({
               postId={postId}
             />
           )}
-
-          {/* <ChatBubble /> 
-          <p>Comment</p> */}
         </div>
         <div className='post__option'>
           <NearMe onClick={sharePost} />
           <p>Share</p>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity='success'>
+              Shared The Post Successfully!
+            </Alert>
+          </Snackbar>
         </div>
       </div>
     </div>

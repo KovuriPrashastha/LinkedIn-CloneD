@@ -1,27 +1,55 @@
-.login{
-    display: grid;
-    place-items: center;
-    height: 100vh;
+.login {
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
 
-.login > button{
-    width: 300px;
-    background-color: #0e76a8;
-    color: #eff2f5;
-    font-weight: 800;
+.login > button {
+  width: 300px;
+  background-color: #0e76a8;
+  color: #eff2f5;
+  font-weight: 800;
 }
 
-.login > button:hover{
-    background-color: white;
-    color: #0e76a8;
+.login > button:hover {
+  background-color: white;
+  color: #0e76a8;
 }
 
-.login > div > img{
-    object-fit: contain;
-    height: 150px;
+.login > div > img {
+  object-fit: contain;
+  height: 150px;
 }
 
 .login > div {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.paper1 {
+  position: absolute;
+  top: 30px;
+  left: 16px;
+  font-size: 18px;
+}
+.paper2 {
+  position: absolute;
+  top: 30px;
+  right: 16px;
+  font-size: 18px;
+}
+
+.heading {
+  padding: 20px;
+  color: '#3f51b5';
+  text-align: center;
+}
+.logos {
+  align-items: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 5px solid #555;
+  width: 150px;
+  height: 150px;
 }

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
 import { useStateValue } from '../StateProvider.js';
-import db from '../firebase.js';
+import db, { storage } from '../firebase.js';
 import {
   Avatar,
   FormControl,
   Select,
   InputLabel,
   MenuItem,
+  Button,
+  Snackbar,
 } from '@material-ui/core';
 import {
   Videocam,
@@ -15,7 +17,9 @@ import {
   PhotoCamera,
   Assignment,
   PostAdd,
+  Send,
 } from '@material-ui/icons';
+import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -26,14 +30,55 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 function CreatePost() {
   const classes = useStyles();
   const [postAs, setPostAs] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [file, setFile] = useState(null);
+  const [url, setURL] = useState('');
+  const [openAlert, setOpenAlert] = useState(false);
+  function handleChange(e) {
+    setFile(e.target.files[0]);
+  }
 
-  const handleChange = (event) => {
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`/images/${file.name}`).put(file);
+
+    uploadTask.on('state_changed', console.log, console.error, () => {
+      storage
+        .ref('images')
+        .child(file.name)
+        .getDownloadURL()
+        .then((url) => {
+          db.collection('posts').add({
+            message: input,
+            timestamp: new Date(),
+            profilePic: user.photoURL,
+            image: url,
+            username: user.displayName,
+            likes: 0,
+            likedUsers: [],
+            postedBy: postAs,
+          });
+          setFile(null);
+          setURL('');
+          setInput('');
+          setPostAs('');
+          setOpenAlert(true);
+        });
+    });
+  };
+  const handleChangep = (event) => {
     setPostAs(event.target.value);
   };
 
@@ -45,25 +90,17 @@ function CreatePost() {
     setOpen(true);
   };
 
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
   const [{ user }, dispatch] = useStateValue();
   const [input, setInput] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const handleSubmit = (e) => {
-    console.log('heloo');
-    e.preventDefault();
-    db.collection('posts').add({
-      message: input,
-      timestamp: new Date(),
-      profilePic: user.photoURL,
-      image: imageUrl,
-      username: user.displayName,
-      likes: 0,
-      likedUsers: [],
-      postedBy: postAs,
-    });
-    setInput('');
-    setImageUrl('');
-  };
+
   return (
     <div className='createPost'>
       <div className='createPost__top'>
@@ -76,11 +113,8 @@ function CreatePost() {
             className='createPost__input'
             placeholder={`Start a post ,${user.displayName}`}
           />
-          <input
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder='url'
-          />
+          <input type='file' onChange={handleChange} />
+
           <FormControl className={classes.formControl}>
             <InputLabel id='demo-controlled-open-select-label'>
               Post As
@@ -92,7 +126,7 @@ function CreatePost() {
               onClose={handleClose}
               onOpen={handleOpen}
               value={postAs}
-              onChange={handleChange}
+              onChange={handleChangep}
             >
               <MenuItem value=''>
                 <em>None</em>
@@ -103,9 +137,16 @@ function CreatePost() {
             </Select>
           </FormControl>
         </form>
-        <button onClick={handleSubmit} type='submit'>
-          Post
-        </button>
+        <Button startIcon={<Send />} onClick={handleUpload} />
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}
+        >
+          <Alert onClose={handleCloseAlert} severity='success'>
+            Posted Successfully!
+          </Alert>
+        </Snackbar>
       </div>
       <div className='createPost__bottom'>
         <div className='createPost__option'>
