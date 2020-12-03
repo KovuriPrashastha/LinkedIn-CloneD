@@ -1,7 +1,9 @@
 .storyReel {
   display: flex;
 }
-
+.add__story {
+  padding-top: 50px;
+}
 .storyreel_scroll {
   display: flex;
   overflow-y: hidden;

@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-function Story({ image, profileSrc, title, storyId }) {
+function Story({ image, profileSrc, title, storyId, owner }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,8 +49,10 @@ function Story({ image, profileSrc, title, storyId }) {
           disableEscapeKeyDown
           aria-labelledby='responsive-dialog-title'
         >
-          <DialogTitle id='responsive-dialog-title'>{'Story'}</DialogTitle>
-          <DialogContent>
+          <DialogTitle id='responsive-dialog-title' className='heading'>
+            {owner}
+          </DialogTitle>
+          <DialogContent className='heading'>
             <DialogContentText>{title}</DialogContentText>
           </DialogContent>
           <DialogActions>

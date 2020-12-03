@@ -12,6 +12,9 @@
   transition: transform 100ms ease-in;
   cursor: pointer;
 }
+.heading {
+  text-align: center;
+}
 .icons {
   position: absolute;
   top: 30px;
