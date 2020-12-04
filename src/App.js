@@ -31,8 +31,12 @@ function App() {
       ) : (
         <div>
           <Header />
+          <div
+          
+          className='app_hide'>
+          <Sidebar  />
+          </div>
           <div className='app__body'>
-            <Sidebar />
             <Feed />
           </div>
         </div>

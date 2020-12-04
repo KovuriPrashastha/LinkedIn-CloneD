@@ -169,7 +169,10 @@ function Post({
         <p>{message}</p>
       </div>
       <div className='post__image'>
-        <img src={image} alt='' />
+        <img src={image} alt='' 
+        width='600'
+        height='300'
+        />
       </div>
       <div className='post__options'>
         <div className='post__option'>

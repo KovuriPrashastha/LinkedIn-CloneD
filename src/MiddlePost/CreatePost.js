@@ -25,7 +25,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing(2),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -105,15 +104,17 @@ function CreatePost() {
   return (
     <div className='createPost'>
       <div className='createPost__top'>
+       <div style={{'display':"flex" , "justifyContent": "space-around"}}>
         <Avatar src={user.photoURL} />
-        <form>
-          <input
+       <input
             InputProps={<PostAdd />}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className='createPost__input'
             placeholder={`Start a post ,${user.displayName}`}
           />
+          </div>
+   <div style={{'display':"flex", "justifyContent": "space-between","paddingLeft":30}}>
           <TextField
             style={{ 'padding-top': '24px' }}
             type='file'
@@ -141,8 +142,11 @@ function CreatePost() {
               <MenuItem value={'Student'}>Student</MenuItem>
             </Select>
           </FormControl>
-        </form>
-        <Button startIcon={<Send />} onClick={handleUpload} />
+        <Button 
+            style={{ 'margin': '24px' }}
+        
+        startIcon={<Send />} onClick={handleUpload} />
+        </div>
         <Snackbar
           open={openAlert}
           autoHideDuration={6000}

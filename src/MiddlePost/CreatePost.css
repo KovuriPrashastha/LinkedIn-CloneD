@@ -9,29 +9,16 @@
 }
 
 .createPost__top {
-  display: flex;
+  /* display: flex; */
   border-bottom: 1px solid #f1f2f5;
   padding: 15px;
 }
 
-.createPost__top > form {
+/* .createPost__top > form {
   flex: 1;
   display: flex;
-}
+} */
 
-.createPost__top > form > input {
-  outline-width: 0;
-  border: none;
-  padding: 5px 20px;
-  margin: 0 10px;
-  border-radius: 999px;
-  background-color: #f1f2f5;
-}
-@media (max-width: 1200px) {
-  .createPost__top > button {
-    display: visible;
-  }
-}
 /* .createPost__top > button{
     display: none;
 } */
@@ -41,7 +28,13 @@
 }
 
 .createPost__input {
-  flex: 1;
+  outline-width: 0;
+  width: 80%;
+  border: none;
+  padding: 5px 20px;
+  margin: 0 10px;
+  border-radius: 999px;
+  background-color: #f1f2f5;
 }
 .createPost__option {
   padding: 20px;
