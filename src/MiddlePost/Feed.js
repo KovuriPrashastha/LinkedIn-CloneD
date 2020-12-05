@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import StoryReel from './StoryReel.js';
 import CreatePost from './CreatePost.js';
 import Post from './Post.js';
-import db from '../firebase.js';
+import db, { firebaseApp } from '../firebase.js';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
+  const [CUser, setCUser] = useState(null);
   // const [studentPosts, setStudentPosts] = useState([]);
   // const [teacherPosts, setTeacherPosts] = useState([]);
 
@@ -30,6 +31,15 @@ function Feed() {
   // posts = [].concat(posts, studentPosts);
   // console.log(posts);
 
+  const authListener = () => {
+    firebaseApp.auth().onAuthStateChanged((authUser) => {
+   setCUser(authUser.displayName);
+    });
+  };
+  useEffect(() => {
+    authListener();
+  });
+
   return (
     <div className='feed'>
       <StoryReel />
@@ -37,6 +47,7 @@ function Feed() {
       {posts.map((post) => (
         <Post
           key={post.id}
+          CUser={CUser}
           postId={post.id}
           profilePic={post.data.profilePic}
           timestamp={post.data.timestamp}

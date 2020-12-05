@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Post.css';
 import db from '../firebase.js';
+import {firebaseApp} from '../firebase.js'
 import Comments from './Comment.js';
 import {
   Avatar,
@@ -15,6 +16,8 @@ import {
   NearMe,
   Comment,
   KeyboardArrowDown,
+  Delete,
+
 } from '@material-ui/icons';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,11 +33,20 @@ function Post({
   postId,
   likes,
   likedUsers,
+  CUser,
 }) {
   const [count, setCount] = useState(false);
   const [comment, setComment] = useState('');
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [{ user }, dispatch] = useStateValue();
+
+function DeletePost() {
+  db.collection('posts').doc(postId).delete()
+
+}
+
+
+
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -158,10 +170,22 @@ function Post({
   return (
     <div className='post'>
       <div className='post__top'>
+        <div style={{display:"flex"}}>
         <Avatar src={profilePic} className='post__avatar' />
         <div className='post__topInfo'>
           <h3>{username}</h3>
           <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
+        </div>
+        </div>
+        <div>
+       { CUser == username ? (
+         <Delete 
+         onClick={DeletePost}
+         />
+       ) : (null)
+
+
+       }   
         </div>
       </div>
       <Divider />
@@ -191,7 +215,31 @@ function Post({
           )}
           <Typography style={{ marginLeft: 10 }}>{likes}</Typography>
         </div>
-        <form className='add_comment'>
+        <div className='post__option'>
+        <Comment
+              className='comments_open'
+              onClick={() => {
+                setCommentsOpen(true);
+              }}
+              endIcon={<KeyboardArrowDown />}
+           / >
+              
+           
+        </div>
+       
+        <div className='post__option'>
+          <NearMe onClick={sharePost} />
+          <p>Share</p>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity='success'>
+              Shared The Post Successfully!
+            </Alert>
+          </Snackbar>
+        </div>
+        <br/>
+        
+      </div>
+      <form className='add_comment'>
           <TextField
             className='form___field'
             id='standard-basic'
@@ -210,34 +258,17 @@ function Post({
           </Button>
         </form>
         <div className='post__option'>
-          {!commentsOpen ? (
-            <Button
-              className='comments_open'
-              onClick={() => {
-                setCommentsOpen(true);
-              }}
-              endIcon={<KeyboardArrowDown />}
-            >
-              Show Comments
-            </Button>
+          {commentsOpen ? (
+         <Comments
+         setCommentsOpen={setCommentsOpen}
+         commentsOpen={commentsOpen}
+         postId={postId}
+       />
+            
           ) : (
-            <Comments
-              setCommentsOpen={setCommentsOpen}
-              commentsOpen={commentsOpen}
-              postId={postId}
-            />
+            null
           )}
         </div>
-        <div className='post__option'>
-          <NearMe onClick={sharePost} />
-          <p>Share</p>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity='success'>
-              Shared The Post Successfully!
-            </Alert>
-          </Snackbar>
-        </div>
-      </div>
     </div>
   );
 }
