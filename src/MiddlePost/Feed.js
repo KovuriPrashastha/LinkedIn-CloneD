@@ -38,7 +38,7 @@ function Feed() {
   };
   useEffect(() => {
     authListener();
-  });
+  },[]);
 
   return (
     <div className='feed'>

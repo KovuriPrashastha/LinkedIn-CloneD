@@ -179,9 +179,10 @@ function DeletePost() {
         </div>
         <div>
        { CUser == username ? (
-         <Delete 
+        <Button> <Delete 
          onClick={DeletePost}
          />
+         </Button>
        ) : (null)
 
 
