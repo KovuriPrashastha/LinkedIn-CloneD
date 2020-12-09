@@ -1,55 +1,62 @@
 .login {
   display: grid;
-  place-items: center;
+
   height: 100vh;
 }
 
-.login > button {
+.login > center > button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
   width: 300px;
   background-color: #0e76a8;
   color: #eff2f5;
   font-weight: 800;
 }
 
-.login > button:hover {
+.login > center > button:hover {
   background-color: white;
   color: #0e76a8;
 }
 
-.login > div > img {
+.ill {
   object-fit: contain;
-  height: 150px;
+  height: 300px;
 }
 
-.login > div {
+/* .login > div {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .paper1 {
   position: absolute;
-  top: 30px;
-  left: 16px;
+  height: 200px;
+  width: 200px;
+  top: 300px;
+  left: 100px;
   font-size: 18px;
 }
 .paper2 {
   position: absolute;
-  top: 30px;
-  right: 16px;
+  top: 100px;
+
+  right: 100px;
   font-size: 18px;
+  height: 300px;
+  width: 200px;
 }
 
 .heading {
   padding: 20px;
-  color: '#3f51b5';
+  color: "#3f51b5";
   text-align: center;
 }
 .logos {
-  align-items: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px;
+  position: absolute;
+
   border: 5px solid #555;
-  width: 150px;
-  height: 150px;
+  height: 75px;
 }
