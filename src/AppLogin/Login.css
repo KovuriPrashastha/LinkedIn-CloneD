@@ -3,7 +3,14 @@
 
   height: 100vh;
 }
-
+.paper2 {
+  position: absolute;
+  top: 100px;
+  right: 100px;
+  font-size: 18px;
+  height: 300px;
+  width: 200px;
+}
 .login > center > button {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -11,13 +18,7 @@
   margin-right: auto;
   width: 300px;
   background-color: #0e76a8;
-  color: #eff2f5;
   font-weight: 800;
-}
-
-.login > center > button:hover {
-  background-color: white;
-  color: #0e76a8;
 }
 
 .ill {
@@ -38,19 +39,19 @@
   left: 100px;
   font-size: 18px;
 }
-.paper2 {
-  position: absolute;
-  top: 100px;
-
-  right: 100px;
-  font-size: 18px;
-  height: 300px;
-  width: 200px;
+.signupButton {
+  background: url('../images/google-logo.png') 8px 4px no-repeat;
+  border-radius: 1em !important;
+  color: white !important;
+}
+.login > center > button:hover {
+  background-color: white;
+  color: black !important;
 }
 
 .heading {
   padding: 20px;
-  color: "#3f51b5";
+  color: '#3f51b5';
   text-align: center;
 }
 .logos {
