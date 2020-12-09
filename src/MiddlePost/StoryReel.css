@@ -1,5 +1,6 @@
 .storyReel {
   display: flex;
+  max-width: 460px;
 }
 .add__story {
   padding-top: 50px;

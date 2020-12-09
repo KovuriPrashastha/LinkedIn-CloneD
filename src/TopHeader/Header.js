@@ -50,16 +50,16 @@ function Header() {
           <h4>{user.displayName}</h4>
         </div>
         <IconButton>
-          <Add />
+          <Add style={{ color: '#ffffff' }} />
         </IconButton>
         <IconButton>
-          <Forum />
+          <Forum style={{ color: '#ffffff' }} />
         </IconButton>
         <IconButton>
-          <NotificationsActive />
+          <NotificationsActive style={{ color: '#ffffff' }} />
         </IconButton>
         <IconButton>
-          <ExpandMore />
+          <ExpandMore style={{ color: '#ffffff' }} />
         </IconButton>
       </div>
     </div>

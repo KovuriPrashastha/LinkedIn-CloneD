@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Post.css';
 import db from '../firebase.js';
-import {firebaseApp} from '../firebase.js'
+import { firebaseApp } from '../firebase.js';
 import Comments from './Comment.js';
 import {
   Avatar,
@@ -17,7 +17,6 @@ import {
   Comment,
   KeyboardArrowDown,
   Delete,
-
 } from '@material-ui/icons';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,20 +33,15 @@ function Post({
   likes,
   likedUsers,
   CUser,
+  postAs,
 }) {
   const [count, setCount] = useState(false);
   const [comment, setComment] = useState('');
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [{ user }, dispatch] = useStateValue();
-
-function DeletePost() {
-  db.collection('posts').doc(postId).delete()
-
-}
-
-
-
-
+  const [msg, setMsg] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const [del, setDel] = useState(false);
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
   }
@@ -84,8 +78,6 @@ function DeletePost() {
   }, []);
 
   const sharePost = (e) => {
-    // console.log(db.collection('posts').doc(postId));
-    // console.log('Helloooo');
     var docRef = db.collection('posts').doc(postId);
 
     docRef
@@ -102,10 +94,6 @@ function DeletePost() {
             likedUsers: [],
             //postedBy: doc.data().postedBy,
           });
-          console.log('Document data:', doc.data().message);
-          console.log(doc.data().message);
-          console.log(doc.data().image);
-          console.log(doc.data().postedBy);
         } else {
           // doc.data() will be undefined in this case
           console.log('No such document!');
@@ -114,19 +102,19 @@ function DeletePost() {
       .catch(function (error) {
         console.log('Error getting document:', error);
       });
-    // db.collection('posts').add({
-    //   message: input,
-    //   timestamp: new Date(),
-    //   profilePic: user.photoURL,
-    //   image: imageUrl,
-    //   username: user.displayName,
-    //   likes: 0,
-    //   likedUsers: [],
-    //   postedBy: postAs,
-    // });
+    setMsg('Shared The Post Successfully!');
     setOpen(true);
+    console.log('sga=hared message state here', msg);
+    console.log('open state here ', open);
   };
-
+  const DeletePost = (e) => {
+    db.collection('posts').doc(postId).delete();
+    setMsg('Deleted The Post Successfully!');
+    setDel(true);
+    // alert('hii');
+    console.log('deleted message state here', msg);
+    console.log('open state here ', open);
+  };
   const postLike = (e) => {
     console.log(likes);
     setCount(true);
@@ -153,51 +141,48 @@ function DeletePost() {
         ),
       });
   };
-  //const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
   return (
     <div className='post'>
       <div className='post__top'>
-        <div style={{display:"flex"}}>
-        <Avatar src={profilePic} className='post__avatar' />
-        <div className='post__topInfo'>
-          <h3>{username}</h3>
-          <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
-        </div>
+        <div style={{ display: 'flex' }}>
+          <Avatar src={profilePic} className='post__avatar' />
+          <div className='post__topInfo'>
+            <h3>{username}</h3>
+            <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
+          </div>
         </div>
         <div>
-       { CUser == username ? (
-        <Button> <Delete 
-         onClick={DeletePost}
-         />
-         </Button>
-       ) : (null)
-
-
-       }   
+          {CUser === username ? (
+            <Button>
+              {' '}
+              <Delete onClick={DeletePost} />
+            </Button>
+          ) : null}
+          <p>{postAs}</p>
         </div>
+        <Snackbar
+          open={open || del}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity='success'>
+            {msg}
+          </Alert>
+        </Snackbar>
       </div>
       <Divider />
       <div className='post__bottom'>
         <p>{message}</p>
       </div>
       <div className='post__image'>
-        <img src={image} alt='' 
-        width='600'
-        height='300'
-        />
+        <img src={image} alt='' width='600' height='300' />
       </div>
       <div className='post__options'>
         <div className='post__option'>
@@ -217,59 +202,57 @@ function DeletePost() {
           <Typography style={{ marginLeft: 10 }}>{likes}</Typography>
         </div>
         <div className='post__option'>
-        <Comment
-              className='comments_open'
-              onClick={() => {
-                setCommentsOpen(true);
-              }}
-              endIcon={<KeyboardArrowDown />}
-           / >
-              
-           
+          <Comment
+            className='comments_open'
+            onClick={() => {
+              setCommentsOpen(true);
+            }}
+            endIcon={<KeyboardArrowDown />}
+          />
         </div>
-       
+
         <div className='post__option'>
           <NearMe onClick={sharePost} />
           <p>Share</p>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar
+            open={open || del}
+            autoHideDuration={100000}
+            onClose={handleClose}
+          >
             <Alert onClose={handleClose} severity='success'>
-              Shared The Post Successfully!
+              {msg}
             </Alert>
           </Snackbar>
         </div>
-        <br/>
-        
+        <br />
       </div>
       <form className='add_comment'>
-          <TextField
-            className='form___field'
-            id='standard-basic'
-            label='Add a comment'
-            type='text'
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+        <TextField
+          className='form___field'
+          id='standard-basic'
+          label='Add a comment'
+          type='text'
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <Button
+          startIcon={<Comment />}
+          disabled={!comment}
+          type='submit'
+          onClick={postComment}
+        >
+          Add
+        </Button>
+      </form>
+      <div className='post__option'>
+        {commentsOpen ? (
+          <Comments
+            setCommentsOpen={setCommentsOpen}
+            commentsOpen={commentsOpen}
+            postId={postId}
           />
-          <Button
-            startIcon={<Comment />}
-            disabled={!comment}
-            type='submit'
-            onClick={postComment}
-          >
-            Add
-          </Button>
-        </form>
-        <div className='post__option'>
-          {commentsOpen ? (
-         <Comments
-         setCommentsOpen={setCommentsOpen}
-         commentsOpen={commentsOpen}
-         postId={postId}
-       />
-            
-          ) : (
-            null
-          )}
-        </div>
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -33,12 +33,12 @@ function Feed() {
 
   const authListener = () => {
     firebaseApp.auth().onAuthStateChanged((authUser) => {
-   setCUser(authUser.displayName);
+      setCUser(authUser.displayName);
     });
   };
   useEffect(() => {
     authListener();
-  },[]);
+  }, []);
 
   return (
     <div className='feed'>
@@ -56,6 +56,7 @@ function Feed() {
           message={post.data.message}
           likes={post.data.likes}
           likedUsers={post.data.likedUsers}
+          postAs={post.data.postedBy}
         />
       ))}
       {/* <Post

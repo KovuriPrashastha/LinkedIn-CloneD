@@ -11,6 +11,7 @@
   margin-right: 10px;
   transition: transform 100ms ease-in;
   cursor: pointer;
+  max-width: 600px;
 }
 .heading {
   text-align: center;
