@@ -96,7 +96,6 @@ function Post({
           });
         } else {
           // doc.data() will be undefined in this case
-          console.log('No such document!');
         }
       })
       .catch(function (error) {
@@ -104,16 +103,11 @@ function Post({
       });
     setMsg('Shared The Post Successfully!');
     setOpen(true);
-    console.log('sga=hared message state here', msg);
-    console.log('open state here ', open);
   };
   const DeletePost = (e) => {
     db.collection('posts').doc(postId).delete();
     setMsg('Deleted The Post Successfully!');
     setDel(true);
-    // alert('hii');
-    console.log('deleted message state here', msg);
-    console.log('open state here ', open);
   };
   const postLike = (e) => {
     console.log(likes);

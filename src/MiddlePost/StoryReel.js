@@ -132,6 +132,7 @@ export default function StoryReel(props) {
             image={story.data.image}
             title={story.data.title}
             owner={story.data.username}
+            time={story.data.timestamp}
           />
         ))}
       </div>
